@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Style.css">
+    <title>Convertiseur brut en net</title>
+</head>
+<body>
+
+        <h1>Calcul Du Salaire Brut En Net</h1>
+
+
+<section id="position">
+
+<section id="Gauche">
+
+<section id="Calcul">
+
+    <div id="brut">
+    
+        <h3>Indiquez votre salaire brut</h3>
+    
+        <p>Horaire brut</p>
+        <input onkeyup="calcule();" id="BrutH" class="champs" placeholder="0" type="number">
+
+        <div id="role"><p>Mensuel brut</p><div id="messtatu"></div></div>
+        <input onkeyup="calcule();" id="BrutM" class="champs" placeholder="0" type="number">
+
+        <p>Annuel brut</p>
+        <input onkeyup="calcule();" id="BrutA" class="champs" placeholder="0" type="number">
+    
+    </div>
+
+    <div id="net">
+    
+        <h3>Résultat de votre salaire net</h3>
+    
+        <p>Horaire net</p>
+        <input id="NetH" class="champs" type="number" placeholder="0" disabled="disabled">
+
+        <p>Mensuel net</p>
+        <input id="NetM" class="champs" type="number" placeholder="0" disabled="disabled">
+
+        <p>Annuel net</p>
+        <input id="NetA" class="champs" type="number" placeholder="0" disabled="disabled">
+    
+    </div>
+
+</section>
+
+<section id="Statut">
+
+    <h3>Sélectionnez votre statut :</h3>
+
+    <section class="formchoix">
+
+        <div class="choix">
+            <input onclick="calcule();" id="noncadre" type="radio" name="statut" checked="checked">
+            <p>Salarié non cadre</p>
+        </div>
+
+        <div class="choix">
+            <input onclick="calcule();" id="cadre" type="radio" name="statut">
+            <p>Salarié cadre</p>
+        </div>
+
+        <div class="choix">
+            <input onclick="calcule();" id="publique" type="radio" name="statut">
+            <p>Fonction publique</p>
+        </div>
+
+        <div class="choix">
+            <input onclick="calcule();" id="liberal" type="radio" name="statut">
+            <p>Profession libérale</p>
+        </div>
+
+        <div class="choix">
+            <input onclick="calcule();" id="portage" type="radio" name="statut">
+            <p>Portage salarial</p>
+        </div>
+
+    </section>
+
+</section>
+
+</section>
+
+<section id="Droite">
+    
+    <section>
+        <h3>Sélectionnez votre temps de travail :&nbsp <div id="resultemps">50%</div></h3>
+        <input onmousemove="calcule();" onclick="calcule();" id="temps" type="range">
+    </section>
+
+    <section>
+        
+        <h3>Sélectionnez le nombre de mois de prime conventionnelle :</h3>
+
+        <section class="formchoix">
+
+            <div class="choix">
+                <div id="img12" class="posimg">
+                <input id="12" type="radio" name="prime" checked="checked">
+                </div>
+                <p>12 mois</p>
+            </div>
+    
+            <div class="choix">
+                <div id="img13" class="posimg">
+                    <img src="verifier.png" class="img">
+                <input id="13" type="radio" name="prime">
+                </div>
+                <p>13 mois</p>
+            </div>
+    
+            <div class="choix">
+                <div class="posimg">
+                    <img src="verifier.png" class="img">
+                <input id="14" type="radio" name="prime">
+                </div>
+                <p>14 mois</p>
+            </div>
+    
+            <div class="choix">
+                <div class="posimg">
+                    <img src="verifier.png" class="img">
+                <input id="15" type="radio" name="prime">
+                </div>
+                <p>15 mois</p>
+            </div>
+    
+            <div class="choix">
+                <div class="posimg">
+                    <img src="verifier.png" class="img">
+                <input id="16" type="radio" name="prime">
+                </div>
+                <p>16 mois</p>
+            </div>
+    
+        </section>
+
+    </section>
+
+    <section>
+        <h3>Sélectionnez le taux de prélèvement à la source :&nbsp <div id="resultprelev">50%</div></h3>
+        <input onmousemove="calcule();" onclick="calcule();" id="prelev" type="range">
+    </section>
+
+    <section>
+        
+        <h3>Estimation de votre salaire net après le prélèvement à la source</h3>
+        
+        <section id="Resultat">
+
+        <div>
+            <p>Mensuel net après impôts</p>
+            <input class="champs" placeholder="0" type="number">
+        </div>
+
+        <div id="Annuel">
+            <p>Annuel net après impôts</p>
+            <input class="champs" placeholder="0" type="number">
+        </div>
+
+
+    </section>
+    <button onclick="reset();">Effacer les champs</button>
+    </section>
+
+
+</section>
+
+</section>
+</body>
+<script src="Script.js"></script>
+</html>
