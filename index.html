@@ -3,175 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Bilal Ouhrouche 3D</title>
     <link rel="stylesheet" href="Style.css">
-    <title>Convertiseur salaire brut en net</title>
+    <script src="js/three.min.js"></script>
+    <script type="module" src="js/ColladaLoader.js"></script>
 </head>
+
 <body>
-
-        <h1>Calcul Du Salaire Brut En Net</h1>
-
-
-<section id="position">
-
-<section id="Gauche">
-
-<section id="Calcul">
-
-    <div id="brut">
-    
-        <h3>Indiquez votre salaire brut</h3>
-    
-        <p>Horaire brut</p>
-        <input onkeyup="calcule();" id="BrutH" class="champs" placeholder="0" type="number">
-
-        <div id="role"><p>Mensuel brut</p><div id="messtatu"></div></div>
-        <input onkeyup="calcule();" id="BrutM" class="champs" placeholder="0" type="number">
-
-        <p>Annuel brut</p>
-        <input onkeyup="calcule();" id="BrutA" class="champs" placeholder="0" type="number">
-    
+    <div id="bouton">
+        <button class="bouton" id="zoomInButton">+</button>
+        <button class="bouton" id="zoomOutButton">-</button>
     </div>
+    <div id="Objet"></div>
 
-    <div id="net">
-    
-        <h3>Résultat de votre salaire net</h3>
-    
-        <p>Horaire net</p>
-        <input id="NetH" class="champs" type="number" placeholder="0" disabled="disabled">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var container = document.getElementById('Objet');
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 5;
 
-        <p>Mensuel net</p>
-        <input id="NetM" class="champs" type="number" placeholder="0" disabled="disabled">
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
 
-        <p>Annuel net</p>
-        <input id="NetA" class="champs" type="number" placeholder="0" disabled="disabled">
-    
-    </div>
+            var loader = new THREE.ColladaLoader();
+            var model;
 
-</section>
+            loader.load('PC.dae', function (collada) {
+                model = collada.scene;
 
-<section id="Statut">
+                scene.add(model);
 
-    <h3>Sélectionnez votre statut :</h3>
+                var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+                directionalLight.position.set(1, 1, 1).normalize();
+                scene.add(directionalLight);
 
-    <section class="formchoix">
+                container.addEventListener('mousedown', onMouseDown, false);
+                container.addEventListener('mouseup', onMouseUp, false);
+            }, undefined, function (error) {
+                console.error('Erreur lors du chargement du modèle', error);
+            });
 
-        <div class="choix">
-            <input onclick="calcule();" id="noncadre" type="radio" name="statut" checked="checked">
-            <p>Salarié non cadre</p>
-        </div>
+            var ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
 
-        <div class="choix">
-            <input onclick="calcule();" id="cadre" type="radio" name="statut">
-            <p>Salarié cadre</p>
-        </div>
+            var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight.position.set(1, 1, 1).normalize();
+            scene.add(directionalLight);
 
-        <div class="choix">
-            <input onclick="calcule();" id="publique" type="radio" name="statut">
-            <p>Fonction publique</p>
-        </div>
+            var animate = function () {
+                requestAnimationFrame(animate);
 
-        <div class="choix">
-            <input onclick="calcule();" id="liberal" type="radio" name="statut">
-            <p>Profession libérale</p>
-        </div>
+                renderer.render(scene, camera);
+            };
 
-        <div class="choix">
-            <input onclick="calcule();" id="portage" type="radio" name="statut">
-            <p>Portage salarial</p>
-        </div>
+            var isMouseDown = false;
+            var previousMouseX = 0;
+            var previousMouseY = 0;
 
-    </section>
+            function onMouseDown(event) {
+                isMouseDown = true;
+                previousMouseX = event.clientX;
+                previousMouseY = event.clientY;
+            }
 
-</section>
+            function onMouseUp() {
+                isMouseDown = false;
+            }
 
-</section>
+            function onMouseMove(event) {
+                if (!isMouseDown) return;
 
-<section id="Droite">
-    
-    <section>
-        <h3>Sélectionnez votre temps de travail :&nbsp <div id="resultemps">50%</div></h3>
-        <input onmousemove="calcule();" onclick="calcule();" id="temps" type="range">
-    </section>
+                var deltaX = event.clientX - previousMouseX;
+                var deltaY = event.clientY - previousMouseY;
 
-    <section>
-        
-        <h3>Sélectionnez le nombre de mois de prime conventionnelle :</h3>
+                model.rotation.y += deltaX * 0.01;
+                model.rotation.x += deltaY * 0.01;
 
-        <section class="formchoix">
+                previousMouseX = event.clientX;
+                previousMouseY = event.clientY;
+            }
 
-            <div class="choix">
-                <div id="img12" class="posimg">
-                <input id="12" type="radio" name="prime" checked="checked">
-                </div>
-                <p>12 mois</p>
-            </div>
-    
-            <div class="choix">
-                <div id="img13" class="posimg">
-                    <img src="verifier.png" class="img">
-                <input id="13" type="radio" name="prime">
-                </div>
-                <p>13 mois</p>
-            </div>
-    
-            <div class="choix">
-                <div class="posimg">
-                    <img src="verifier.png" class="img">
-                <input id="14" type="radio" name="prime">
-                </div>
-                <p>14 mois</p>
-            </div>
-    
-            <div class="choix">
-                <div class="posimg">
-                    <img src="verifier.png" class="img">
-                <input id="15" type="radio" name="prime">
-                </div>
-                <p>15 mois</p>
-            </div>
-    
-            <div class="choix">
-                <div class="posimg">
-                    <img src="verifier.png" class="img">
-                <input id="16" type="radio" name="prime">
-                </div>
-                <p>16 mois</p>
-            </div>
-    
-        </section>
+            var zoomInButton = document.getElementById('zoomInButton');
+            var zoomOutButton = document.getElementById('zoomOutButton');
 
-    </section>
+ 
+            zoomInButton.addEventListener('click', function() {
+                camera.position.z -= 0.1;
+                camera.position.z = Math.max(camera.position.z, 2);
+            });
 
-    <section>
-        <h3>Sélectionnez le taux de prélèvement à la source :&nbsp <div id="resultprelev">50%</div></h3>
-        <input onmousemove="calcule();" onclick="calcule();" id="prelev" type="range">
-    </section>
-
-    <section>
-        
-        <h3>Estimation de votre salaire net après le prélèvement à la source</h3>
-        
-        <section id="Resultat">
-
-        <div>
-            <p>Mensuel net après impôts</p>
-            <input class="champs" placeholder="0" type="number">
-        </div>
-
-        <div id="Annuel">
-            <p>Annuel net après impôts</p>
-            <input class="champs" placeholder="0" type="number">
-        </div>
+            zoomOutButton.addEventListener('click', function() {
+                camera.position.z += 0.1;
+                camera.position.z = Math.min(camera.position.z, 10);
+            });
 
 
-    </section>
-    <button onclick="reset();">Effacer les champs</button>
-    </section>
+            container.addEventListener('mousemove', onMouseMove, false);
 
-
-</section>
-
-</section>
+            animate();
+        });
+    </script>
 </body>
-<script src="Script.js"></script>
 </html>
